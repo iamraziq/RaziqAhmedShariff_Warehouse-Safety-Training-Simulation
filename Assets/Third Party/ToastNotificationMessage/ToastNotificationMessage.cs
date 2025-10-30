@@ -48,21 +48,21 @@ public class ToastNotificationMessage : MonoBehaviour
             return;
 
         // Check for inifite messages
-        if( messageTime != 0)
-        {
-            if (timeElapsed > messageTime)
-            {
-                // If there is a CanvasGroup, enable isHiding so that ToastNotification starts hiding it before closing
-                if (ToastNotification.isCanvasGroup)
-                    ToastNotification.isHiding = true;
-                else
-                    ToastNotification.Hide();
-            }
+        //if( messageTime != 0)
+        //{
+        //    if (timeElapsed > messageTime)
+        //    {
+        //        // If there is a CanvasGroup, enable isHiding so that ToastNotification starts hiding it before closing
+        //        if (ToastNotification.isCanvasGroup)
+        //            ToastNotification.isHiding = true;
+        //        else
+        //            ToastNotification.Hide();
+        //    }
 
-            timeElapsed += Time.deltaTime;
+        //    timeElapsed += Time.deltaTime;
 
-            RenderTimer();
-        }
+        //    RenderTimer();
+        //}
 
     }
 

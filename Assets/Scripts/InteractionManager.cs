@@ -36,6 +36,13 @@ public class InspectionManager : MonoBehaviour
         StartCoroutine(MoveToInspect(item.transform));
         // optionally play narration
         if (item.narrationClip) item.GetComponent<AudioSource>()?.PlayOneShot(item.narrationClip);
+
+        //Shwo Toast message about the item
+        ToastNotification.Hide();
+        if (!string.IsNullOrEmpty(item.itemName))
+        {
+            ToastNotification.Show("Inspecting: " + item.itemName + "\nRotate the item with left mouse drag.", 10f, "avatar");
+        }
     }
 
     IEnumerator MoveToInspect(Transform t)
@@ -62,8 +69,7 @@ public class InspectionManager : MonoBehaviour
 
     public void EndInspection()
     {
-        if (current == null) return;
-
+        if (current == null) return;     
         // mark inspected (updates checklist)
         current.MarkInspected();
         ChecklistManager.Instance.MarkCompleted(current.itemName);
@@ -81,5 +87,6 @@ public class InspectionManager : MonoBehaviour
         if (rotComp) Destroy(rotComp);
 
         current = null;
+        ToastNotification.Hide();
     }
 }

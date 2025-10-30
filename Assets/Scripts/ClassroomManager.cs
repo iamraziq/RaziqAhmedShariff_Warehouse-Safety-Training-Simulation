@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Video;
 
 public class ClassroomManager : MonoBehaviour
 {
@@ -20,25 +21,20 @@ public class ClassroomManager : MonoBehaviour
         ToastNotification.Hide();
         videoPlayerObject.SetActive(true);
     }
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void OnVideoComplete()
     {
         videoPlayerObject.SetActive(false);
+
         foreach (var obj in enableObjs)
-        {
             obj.SetActive(true);
-        }
+
         foreach (var obj in disableObjs)
-        {
             obj.SetActive(false);
-        }
-        ToastNotification.Show("Please complete the safety inspections checklist", 5f, "avatar");
+
+        ToastNotification.Show("Complete the safety inspection checklist. Hover over each item and click to inspect and learn about it.", 10f, "avatar");
     }
+
     public void OnProceedPressed()
     {
         if (ChecklistManager.Instance.AllCompleted())

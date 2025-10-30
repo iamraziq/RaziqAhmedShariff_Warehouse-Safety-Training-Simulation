@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ItemInspector : MonoBehaviour
 {
@@ -30,5 +31,10 @@ public class ItemInspector : MonoBehaviour
         {
             onDone?.Invoke();
         }
+    }
+
+    public void EndInspect()
+    {
+        onDone?.Invoke();
     }
 }

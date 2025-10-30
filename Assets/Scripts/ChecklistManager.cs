@@ -9,7 +9,9 @@ public class ChecklistManager : MonoBehaviour
     public Transform contentParent; // where rows will be instantiated
     public GameObject checklistRowPrefab;
     public List<string> itemNames; // populate in inspector for the tray items
-    public Button finalizeButton;
+    public GameObject sceneFinalPanel;
+    public ProgressBar progressBar; // assign in inspector
+
 
     Dictionary<string, TMP_Text> rowStatusMap = new Dictionary<string, TMP_Text>();
 
@@ -34,12 +36,25 @@ public class ChecklistManager : MonoBehaviour
         {
             rowStatusMap[itemName].text = "Inspection Completed";
         }
-        if(AllCompleted())
+
+        UpdateProgressBar();
+        if (AllCompleted())
         {
             Debug.Log("All inspections completed!");
             // Optionally trigger further actions here
-            finalizeButton.gameObject.SetActive(true);
+            sceneFinalPanel.SetActive(true);
         }
+    }
+    void UpdateProgressBar()
+    {
+        if (progressBar == null) return;
+
+        int completed = 0;
+        foreach (var kv in rowStatusMap)
+            if (kv.Value.text == "Inspection Completed") completed++;
+
+        float progress = completed / (float)rowStatusMap.Count;
+        progressBar.SetProgress(progress);
     }
 
     public bool AllCompleted()
@@ -48,4 +63,14 @@ public class ChecklistManager : MonoBehaviour
             if (kv.Value.text != "Inspection Completed") return false;
         return true;
     }
+
+    public float GetProgressPercent()
+    {
+        int completed = 0;
+        foreach (var kv in rowStatusMap)
+            if (kv.Value.text == "Inspection Completed") completed++;
+
+        return (float)completed / itemNames.Count;
+    }
+
 }
