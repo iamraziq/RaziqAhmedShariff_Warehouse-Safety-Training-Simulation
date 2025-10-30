@@ -22,7 +22,6 @@ public class InteractableItem : MonoBehaviour, IInteractable
         if (isInspected) return;
         if (glowObject) glowObject.SetActive(true);
         // Optionally play a hover sound or begin narration
-        audioSource.Play();  // if you want narration on hover
     }
 
     public void OnHoverExit()
@@ -37,6 +36,7 @@ public class InteractableItem : MonoBehaviour, IInteractable
         if (isInspected) return;
         // Trigger inspection via InspectionManager
         InspectionManager.Instance.StartInspection(this);
+        //audioSource.Play();  // if you want narration on select
     }
 
     public void MarkInspected()

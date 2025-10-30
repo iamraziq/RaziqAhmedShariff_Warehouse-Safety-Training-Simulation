@@ -66,7 +66,7 @@ public class InspectionManager : MonoBehaviour
 
         // mark inspected (updates checklist)
         current.MarkInspected();
-        //ChecklistManager.Instance.MarkCompleted(current.itemName);
+        ChecklistManager.Instance.MarkCompleted(current.itemName);
 
         // return to original position
         current.transform.SetParent(originalParent, true);

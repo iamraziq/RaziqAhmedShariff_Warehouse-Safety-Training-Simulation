@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using TMPro;
 
 public class ChecklistManager : MonoBehaviour
 {
@@ -8,8 +9,9 @@ public class ChecklistManager : MonoBehaviour
     public Transform contentParent; // where rows will be instantiated
     public GameObject checklistRowPrefab;
     public List<string> itemNames; // populate in inspector for the tray items
+    public Button finalizeButton;
 
-    Dictionary<string, Text> rowStatusMap = new Dictionary<string, Text>();
+    Dictionary<string, TMP_Text> rowStatusMap = new Dictionary<string, TMP_Text>();
 
     void Awake() { Instance = this; }
 
@@ -18,7 +20,7 @@ public class ChecklistManager : MonoBehaviour
         foreach (var name in itemNames)
         {
             var rowGO = Instantiate(checklistRowPrefab, contentParent);
-            var texts = rowGO.GetComponentsInChildren<Text>();
+            var texts = rowGO.GetComponentsInChildren<TMP_Text>();
             // assume order [itemName, status]
             texts[0].text = name;
             texts[1].text = "Pending";
@@ -31,6 +33,12 @@ public class ChecklistManager : MonoBehaviour
         if (rowStatusMap.ContainsKey(itemName))
         {
             rowStatusMap[itemName].text = "Inspection Completed";
+        }
+        if(AllCompleted())
+        {
+            Debug.Log("All inspections completed!");
+            // Optionally trigger further actions here
+            finalizeButton.gameObject.SetActive(true);
         }
     }
 
