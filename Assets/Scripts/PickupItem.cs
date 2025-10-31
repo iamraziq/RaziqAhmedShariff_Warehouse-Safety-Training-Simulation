@@ -26,6 +26,6 @@ public class PickupItem : MonoBehaviour
 
 
         // notify manager
-        // WarehouseManager.Instance.NotifyItemPicked(itemID, this);
+        WarehouseManager.Instance.NotifyItemPicked(itemID, this);
     }
 }
