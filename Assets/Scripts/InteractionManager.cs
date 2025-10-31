@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class InspectionManager : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class InspectionManager : MonoBehaviour
     public float moveTime = 0.25f;
     public Vector3 inspectLocalPos = Vector3.zero;
     public Vector3 inspectLocalRot = Vector3.zero;
+    public bool isBeingInspected = false;
+    public Button closeButton; // assign in inspector
 
     InteractableItem current;
     Vector3 originalPos;
@@ -15,12 +18,26 @@ public class InspectionManager : MonoBehaviour
     Transform originalParent;
     Rigidbody rb;
     Collider col;
+    AudioSource audioSource;
+
 
     void Awake() { Instance = this; }
 
+    private void Start()
+    {
+        if (closeButton)
+        {
+            closeButton.onClick.AddListener(() =>
+            {
+                EndInspection();
+            });
+        }
+    }
     public void StartInspection(InteractableItem item)
     {
         if (current != null) return; // one at a time
+        
+        isBeingInspected = true;
         current = item;
         originalParent = item.transform.parent;
         originalPos = item.transform.position;
@@ -35,8 +52,14 @@ public class InspectionManager : MonoBehaviour
         item.transform.SetParent(inspectionRoot, true);
         StartCoroutine(MoveToInspect(item.transform));
         // optionally play narration
-        if (item.narrationClip) item.GetComponent<AudioSource>()?.PlayOneShot(item.narrationClip);
-
+        if (item.narrationClip)
+        {
+            audioSource = item.GetComponent<AudioSource>();
+            audioSource?.Stop(); // stop if already playing
+            audioSource?.PlayOneShot(item.narrationClip);
+        }
+        if (closeButton)
+            closeButton.gameObject.SetActive(true);
         //Shwo Toast message about the item
         ToastNotification.Hide();
         if (!string.IsNullOrEmpty(item.itemName))
@@ -69,8 +92,9 @@ public class InspectionManager : MonoBehaviour
 
     public void EndInspection()
     {
-        if (current == null) return;     
+        if (current == null) return;
         // mark inspected (updates checklist)
+        isBeingInspected = false;
         current.MarkInspected();
         ChecklistManager.Instance.MarkCompleted(current.itemName);
 
@@ -81,12 +105,14 @@ public class InspectionManager : MonoBehaviour
 
         if (rb) rb.isKinematic = false;
         if (col) col.enabled = true;
-
+        if (audioSource) audioSource.Stop();
         // cleanup
         var rotComp = current.GetComponent<ItemInspector>();
         if (rotComp) Destroy(rotComp);
 
         current = null;
         ToastNotification.Hide();
+        if (closeButton)
+            closeButton.gameObject.SetActive(false);
     }
 }

@@ -7,6 +7,7 @@ public class Interactor : MonoBehaviour
     public LayerMask interactableLayer;
     Camera cam;
     IInteractable lastHit;
+    Collider lastHitCollider; //store actual collider for reference
 
     void Awake() => cam = Camera.main;
 
@@ -29,13 +30,24 @@ public class Interactor : MonoBehaviour
                     lastHit?.OnHoverExit();
                     interactable.OnHoverEnter();
                     lastHit = interactable;
+                    lastHitCollider = hit.collider; 
                 }
                 return;
             }
         }
+        Debug.DrawRay(ray.origin, ray.direction * maxDistance, Color.green);
 
+
+        //// nothing hit
+        //if (lastHit != null) { lastHit.OnHoverExit(); lastHit = null; }
         // nothing hit
-        if (lastHit != null) { lastHit.OnHoverExit(); lastHit = null; }
+        if (lastHit != null)
+        {
+            lastHit.OnHoverExit();
+            lastHit = null;
+            lastHitCollider = null;
+        }
+
     }
 
     void TrySelect()
@@ -47,6 +59,12 @@ public class Interactor : MonoBehaviour
             interactable?.OnSelect();
         }
     }
+    //his method now safely returns the collider you’re hovering over
+    public Collider GetHoveredCollider()
+    {
+        return lastHitCollider;
+    }
+
 }
 
 public interface IInteractable

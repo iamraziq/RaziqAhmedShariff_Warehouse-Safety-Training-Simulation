@@ -40,6 +40,7 @@ public class ClassroomManager : MonoBehaviour
         if (ChecklistManager.Instance.AllCompleted())
         {
             // Load next scene or enable proceed UI
+            GameSession.Instance.InitFromChecklist(ChecklistManager.Instance.itemNames);//Saving Game Session for next scene
             UnityEngine.SceneManagement.SceneManager.LoadScene("Scene_Warehouse");
         }
         else

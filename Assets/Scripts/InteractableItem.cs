@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
@@ -19,7 +20,7 @@ public class InteractableItem : MonoBehaviour, IInteractable
 
     public void OnHoverEnter()
     {
-        if (isInspected) return;
+        if (isInspected || InspectionManager.Instance.isBeingInspected) return;
         if (glowObject) glowObject.SetActive(true);
         // Optionally play a hover sound or begin narration
     }
@@ -35,7 +36,8 @@ public class InteractableItem : MonoBehaviour, IInteractable
     {
         if (isInspected) return;
         // Trigger inspection via InspectionManager
-        InspectionManager.Instance.StartInspection(this);
+        if(InspectionManager.Instance != null)
+            InspectionManager.Instance.StartInspection(this);
         //audioSource.Play();  // if you want narration on select
     }
 
