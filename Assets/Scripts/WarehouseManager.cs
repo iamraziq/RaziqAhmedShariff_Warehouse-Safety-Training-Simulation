@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 
 public class WarehouseManager : MonoBehaviour
@@ -20,6 +21,7 @@ public class WarehouseManager : MonoBehaviour
 
 
     public GameObject quizPanel;
+    public GameObject failPanel;
 
     bool taskActive = false;
 
@@ -34,14 +36,15 @@ public class WarehouseManager : MonoBehaviour
     {
         timeLeft = totalTime;
         UpdateProgressUI();
-
-        ToastNotification.Show("Collect and place all warehouse items before time expires!");
         if (SoundManager.Instance != null)
-            SoundManager.Instance.PlaySound(SoundManager.Instance.guide_Collect);
+            SoundManager.Instance.PlaySound(SoundManager.Instance.guide_WelcomeWarehouse);
     }
     public void OnClickNext_Wel()
     {
-         taskActive = true;
+        taskActive = true;
+        ToastNotification.Show("Collect and place all warehouse items before time expires!");
+        if (SoundManager.Instance != null)
+            SoundManager.Instance.PlaySound(SoundManager.Instance.guide_Collect);
     }
 
     void Update()
@@ -50,7 +53,6 @@ public class WarehouseManager : MonoBehaviour
         timeLeft -= Time.deltaTime;
         if (timeLeft < 0) timeLeft = 0;
         UpdateTimerUI();
-
 
         if (timeLeft <= 0) OnTimeUp();
     }
@@ -109,14 +111,30 @@ public class WarehouseManager : MonoBehaviour
         // handle fail (offer retry)
         // show retry modal or restart scene
         Debug.Log("Time is up - show retry prompt");
+        ShowFailPanel();
     }
 
-
+    public void ShowFailPanel()
+    {
+        if (failPanel) failPanel.SetActive(true);
+        if (SoundManager.Instance != null)
+            SoundManager.Instance.PlaySound(SoundManager.Instance.guide_Failed);
+    }
     void ShowQuiz()
     {
         if (quizPanel) quizPanel.SetActive(true);
         ToastNotification.Show("Select the correct answer from the options above.");
         if (SoundManager.Instance != null)
             SoundManager.Instance.PlaySound(SoundManager.Instance.guide_Quiz);
+    }
+
+    public void OnLevelFail()
+    {
+        SceneManager.LoadScene("Scene_Warehouse");
+    }
+
+    public void OnLevelPass()
+    {
+        SceneManager.LoadScene("Scene_Classroom");
     }
 }

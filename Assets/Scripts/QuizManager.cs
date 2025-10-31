@@ -43,7 +43,8 @@ public class QuizManager : MonoBehaviour
         }
         else
         {
-            resultText.text = "Failed — please retry.";
+            WarehouseManager.Instance.ShowFailPanel();
+            resultText.text = "Failed — please retry.";        
             // optionally show retry button
         }
         // reset for next attempt
