@@ -17,6 +17,9 @@ public class SoundManager : MonoBehaviour
     public AudioClip guide_TapeGun;
     public AudioClip guide_Failed;
     public AudioClip guide_WelcomeWarehouse;
+    public AudioClip guide_WelcomeClassroom;
+    public AudioClip guide_FinishClassroom;
+    public AudioClip guide_CompleteChecklist;
 
     private AudioSource audioSource;
 

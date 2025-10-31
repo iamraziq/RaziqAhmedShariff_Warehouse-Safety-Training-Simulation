@@ -11,9 +11,15 @@ public class ClassroomManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ToastNotification.Show("Welcome to Warehouse Safety Training", 5f,"avatar");
-        //play audio of welcome message
-        Invoke("PlayVideo", 5f);
+        if (SoundManager.Instance != null)
+            SoundManager.Instance.PlaySound(SoundManager.Instance.guide_WelcomeClassroom);
+    }
+    public void OnClickNext_Class()
+    {
+        ToastNotification.Show("Welcome to Warehouse Safety Training", 5f, "avatar");
+        PlayVideo();
+        if (SoundManager.Instance != null)
+            SoundManager.Instance.StopSound();
     }
 
     public void PlayVideo()
@@ -33,6 +39,8 @@ public class ClassroomManager : MonoBehaviour
             obj.SetActive(false);
 
         ToastNotification.Show("Complete the safety inspection checklist. Hover over each item and click to inspect and learn about it.", 10f, "avatar");
+        if (SoundManager.Instance != null)
+            SoundManager.Instance.PlaySound(SoundManager.Instance.guide_CompleteChecklist);
     }
 
     public void OnProceedPressed()
