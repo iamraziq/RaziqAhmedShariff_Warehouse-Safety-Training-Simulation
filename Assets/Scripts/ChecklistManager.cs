@@ -28,7 +28,7 @@ public class ChecklistManager : MonoBehaviour
             texts[1].text = "Pending";
             rowStatusMap[name] = texts[1];
         }
-        progressBar.SetProgress(GameSession.Instance.GetProgress01());
+        //progressBar.SetProgress(GameSession.Instance.GetProgress01());
     }
 
     public void MarkCompleted(string itemName)

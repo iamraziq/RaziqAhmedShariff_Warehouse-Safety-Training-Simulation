@@ -24,6 +24,9 @@ public class QuizManager : MonoBehaviour
             // all questions answered, enable submit
             // assuming there's a submit button to enable
             submitButton.SetActive(true);
+            ToastNotification.Show("Click Submit to view your results.");
+            if(SoundManager.Instance != null)
+                SoundManager.Instance.PlaySound(SoundManager.Instance.guide_Results);
         }        
     }
 
@@ -45,5 +48,6 @@ public class QuizManager : MonoBehaviour
         }
         // reset for next attempt
         correctAnswers = 0;
+        ToastNotification.Hide();
     }
 }

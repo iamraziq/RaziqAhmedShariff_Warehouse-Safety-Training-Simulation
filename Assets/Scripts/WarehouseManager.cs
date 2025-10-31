@@ -9,10 +9,10 @@ public class WarehouseManager : MonoBehaviour
     public static WarehouseManager Instance;
 
     public TMP_Text timerText; // assign
-    public Slider progressBar; // 0..1
+   // public Slider progressBar; // 0..1
     public float totalTime = 300f; // 5 minutes
     float timeLeft;
-
+    public ProgressBar progressBarScript;
 
     int totalRequired = 4;
     HashSet<string> picked = new HashSet<string>();
@@ -21,7 +21,7 @@ public class WarehouseManager : MonoBehaviour
 
     public GameObject quizPanel;
 
-    bool taskActive = true;
+    bool taskActive = false;
 
 
     void Awake()
@@ -34,8 +34,15 @@ public class WarehouseManager : MonoBehaviour
     {
         timeLeft = totalTime;
         UpdateProgressUI();
-    }
 
+        ToastNotification.Show("Collect and place all warehouse items before time expires!");
+        if (SoundManager.Instance != null)
+            SoundManager.Instance.PlaySound(SoundManager.Instance.guide_Collect);
+    }
+    public void OnClickNext_Wel()
+    {
+         taskActive = true;
+    }
 
     void Update()
     {
@@ -81,7 +88,8 @@ public class WarehouseManager : MonoBehaviour
     void UpdateProgressUI()
     {
         float p = (float)placed.Count / (float)totalRequired;
-        if (progressBar) progressBar.value = p;
+        //if (progressBar) progressBar.value = p;
+        if(progressBarScript) progressBarScript.SetProgress(p);
     }
 
 
@@ -90,7 +98,9 @@ public class WarehouseManager : MonoBehaviour
         if (placed.Count >= totalRequired)
         {
             taskActive = false;
+            ToastNotification.Hide();
             // show quiz after a short delay
+            Invoke("ShowQuiz", 3f);
         }
     }
     void OnTimeUp()
@@ -105,5 +115,8 @@ public class WarehouseManager : MonoBehaviour
     void ShowQuiz()
     {
         if (quizPanel) quizPanel.SetActive(true);
+        ToastNotification.Show("Select the correct answer from the options above.");
+        if (SoundManager.Instance != null)
+            SoundManager.Instance.PlaySound(SoundManager.Instance.guide_Quiz);
     }
 }

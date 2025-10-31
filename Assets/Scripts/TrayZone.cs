@@ -30,6 +30,12 @@ public class TrayZone : MonoBehaviour
                 // Snap to the corresponding spawn point
                 item.transform.position = spawnPoints[itemIndex].position;
                 //item.transform.rotation = spawnPoints[itemIndex].rotation;
+                if (placedItems.Count < requiredItems.Count)
+                {
+                    ToastNotification.Show("Now, collect and place the remaining items before the timer runs out!");
+                    if (SoundManager.Instance != null)
+                        SoundManager.Instance.PlaySound(SoundManager.Instance.guide_Remaining);
+                }
             }
         }
     }
