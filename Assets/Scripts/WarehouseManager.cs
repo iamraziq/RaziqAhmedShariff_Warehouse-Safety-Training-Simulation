@@ -1,0 +1,109 @@
+using UnityEngine;
+using UnityEngine.UI;
+using System.Collections.Generic;
+using TMPro;
+
+
+public class WarehouseManager : MonoBehaviour
+{
+    public static WarehouseManager Instance;
+
+    public TMP_Text timerText; // assign
+    public Slider progressBar; // 0..1
+    public float totalTime = 300f; // 5 minutes
+    float timeLeft;
+
+
+    int totalRequired = 4;
+    HashSet<string> picked = new HashSet<string>();
+    HashSet<string> placed = new HashSet<string>();
+
+
+    public GameObject quizPanel;
+
+    bool taskActive = true;
+
+
+    void Awake()
+    {
+        if (Instance == null) Instance = this; else Destroy(gameObject);
+    }
+
+
+    void Start()
+    {
+        timeLeft = totalTime;
+        UpdateProgressUI();
+    }
+
+
+    void Update()
+    {
+        if (!taskActive) return;
+        timeLeft -= Time.deltaTime;
+        if (timeLeft < 0) timeLeft = 0;
+        UpdateTimerUI();
+
+
+        if (timeLeft <= 0) OnTimeUp();
+    }
+
+
+    void UpdateTimerUI()
+    {
+        if (timerText) timerText.text = FormatTime(timeLeft);
+    }
+
+
+    string FormatTime(float t)
+    {
+        int minutes = Mathf.FloorToInt(t / 60);
+        int seconds = Mathf.FloorToInt(t % 60);
+        return string.Format("{0:00}:{1:00}", minutes, seconds);
+    }
+
+
+    public void NotifyItemPicked(string id, PickupItem item = null)
+    {
+        picked.Add(id);
+        UpdateProgressUI();
+    }
+
+
+    public void NotifyItemPlaced(string id)
+    {
+        placed.Add(id);
+        UpdateProgressUI();
+        CheckCompletion();
+    }
+
+
+    void UpdateProgressUI()
+    {
+        float p = (float)placed.Count / (float)totalRequired;
+        if (progressBar) progressBar.value = p;
+    }
+
+
+    void CheckCompletion()
+    {
+        if (placed.Count >= totalRequired)
+        {
+            taskActive = false;
+            // show quiz after a short delay
+        }
+    }
+    void OnTimeUp()
+    {
+        taskActive = false;
+        // handle fail (offer retry)
+        // show retry modal or restart scene
+        Debug.Log("Time is up - show retry prompt");
+    }
+
+
+    void ShowQuiz()
+    {
+        if (quizPanel) quizPanel.SetActive(true);
+    }
+}
