@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Video;
 
@@ -8,11 +9,16 @@ public class ClassroomManager : MonoBehaviour
     public GameObject videoPlayerObject;
     public GameObject[] enableObjs;
     public GameObject[] disableObjs;
+    public TMP_Text learnerNameAndId;
     // Start is called before the first frame update
     void Start()
     {
         if (SoundManager.Instance != null)
             SoundManager.Instance.PlaySound(SoundManager.Instance.guide_WelcomeClassroom);
+        if(SCORMManager.Instance != null)
+        {
+            learnerNameAndId.text = "Learner Name: " + SCORMManager.Instance.StudentName + "\n Learner ID: " + SCORMManager.Instance.StudentId + "";
+        }
     }
     public void OnClickNext_Class()
     {
@@ -48,7 +54,7 @@ public class ClassroomManager : MonoBehaviour
         if (ChecklistManager.Instance.AllCompleted())
         {
             // Load next scene or enable proceed UI
-            GameSession.Instance.InitFromChecklist(ChecklistManager.Instance.itemNames);//Saving Game Session for next scene
+            //GameSession.Instance.InitFromChecklist(ChecklistManager.Instance.itemNames);//Saving Game Session for next scene
             UnityEngine.SceneManagement.SceneManager.LoadScene("Scene_Warehouse");
         }
         else
