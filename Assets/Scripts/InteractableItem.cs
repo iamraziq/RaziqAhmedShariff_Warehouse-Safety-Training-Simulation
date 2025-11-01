@@ -38,6 +38,8 @@ public class InteractableItem : MonoBehaviour, IInteractable
         // Trigger inspection via InspectionManager
         if(InspectionManager.Instance != null)
             InspectionManager.Instance.StartInspection(this);
+        if (SoundManager.Instance != null)
+            SoundManager.Instance.StopSound();
         //audioSource.Play();  // if you want narration on select
     }
 

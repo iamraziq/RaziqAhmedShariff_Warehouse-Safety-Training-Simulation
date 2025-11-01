@@ -28,7 +28,6 @@ public class ChecklistManager : MonoBehaviour
             texts[1].text = "Pending";
             rowStatusMap[name] = texts[1];
         }
-        progressBar.SetProgress(GameSession.Instance.GetProgress01());
     }
 
     public void MarkCompleted(string itemName)
@@ -44,8 +43,11 @@ public class ChecklistManager : MonoBehaviour
             Debug.Log("All inspections completed!");
             // Optionally trigger further actions here
             sceneFinalPanel.SetActive(true);
+            if(SoundManager.Instance != null)
+            {
+                SoundManager.Instance.PlaySound(SoundManager.Instance.guide_FinishClassroom);
+            }
         }
-        GameSession.Instance.MarkInspected(itemName);
     }
     void UpdateProgressBar()
     {

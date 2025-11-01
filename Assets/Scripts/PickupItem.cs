@@ -1,68 +1,82 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Collider))]
-public class PickupItem : MonoBehaviour
+
+public class PickupItem : MonoBehaviour, IInteractable
 {
-    public string itemName;
-    Rigidbody rb;
-    bool isPicked = false;
-    Transform originalParent;
+    public string itemID; // e.g., "TapeGun"
+    bool isCollected = false;
+    public GameObject glowObject;
 
     void Awake()
     {
-        rb = GetComponent<Rigidbody>();
-        if (rb)
-        {
-            rb.isKinematic = true;
-            Debug.Log("[PickupItem] Rigidbody found and set kinematic on " + name);
-        }
-        else
-        {
-            Debug.LogWarning("[PickupItem] No Rigidbody on " + name);
-        }
-
-        originalParent = transform.parent;
+        if (string.IsNullOrEmpty(itemID)) itemID = gameObject.name;
+    }
+    public void OnHoverEnter()
+    {
+        if (isCollected) return;
+        if (glowObject) glowObject.SetActive(true);
+        // Optionally play a hover sound or begin narration
     }
 
-    public void OnPickUp(Transform holdParent)
+    public void OnHoverExit()
     {
-        if (isPicked)
-        {
-            Debug.Log("[PickupItem] Already picked: " + name);
-            return;
-        }
+        if (isCollected) return;
+        if (glowObject) glowObject.SetActive(false);
+        // stop hover narration if playing
+    }
 
-        Debug.Log("[PickupItem] Picking up " + name);
-        isPicked = true;
+    public void OnSelect()
+    {
+
+    }
+
+    public void OnPickedUp(Transform parent)
+    {
+        if (isCollected) return;
+        isCollected = true;
+        if (glowObject) glowObject.SetActive(false);
+        transform.SetParent(parent);
+        transform.localPosition = Vector3.zero; // adjust if you want offset
+        var rb = GetComponent<Rigidbody>();
         if (rb) rb.isKinematic = true;
-        transform.SetParent(holdParent, true);
-        transform.localPosition = Vector3.zero;
-        transform.localRotation = Quaternion.identity;
 
-        var col = GetComponent<Collider>();
-        if (col)
-        {
-            col.enabled = false;
-            Debug.Log("[PickupItem] Collider disabled for: " + name);
-        }
+        // notify manager
+        WarehouseManager.Instance.NotifyItemPicked(itemID, this);
+        ToastNotification.Show($"Place the {itemID} on the table");
+        PlayAudioCustom(itemID);
     }
 
-    public void OnDrop(Vector3 worldPosition)
+    public void PlayAudioCustom(string itemID)
     {
-        Debug.Log("[PickupItem] Dropping " + name);
-        isPicked = false;
-        transform.SetParent(originalParent, true);
-        transform.position = worldPosition;
+        AudioClip clipToPlay = null;
 
-        if (rb) rb.isKinematic = false;
-
-        var col = GetComponent<Collider>();
-        if (col)
+        switch (itemID)
         {
-            col.enabled = true;
-            Debug.Log("[PickupItem] Collider re-enabled for: " + name);
+            case "Tape Gun":
+                clipToPlay = SoundManager.Instance.guide_TapeGun;
+                break;
+
+            //case "Safety Helmet":
+            case "Safety Helmet":
+                clipToPlay = SoundManager.Instance.guide_Helmet;
+                break;
+
+            case "Safety Gloves":
+                clipToPlay = SoundManager.Instance.guide_Gloves;
+                break;
+
+            //case "Barcode Scanner":
+            case "Barcode Scanner":
+                clipToPlay = SoundManager.Instance.guide_Barcode;
+                break;
+
+            default:
+                Debug.LogWarning($"No guide audio found for itemID: {itemID}");
+                return;
         }
+
+        if (clipToPlay != null)
+            SoundManager.Instance.PlaySound(clipToPlay);
     }
 
-    public bool IsPicked() => isPicked;
 }
