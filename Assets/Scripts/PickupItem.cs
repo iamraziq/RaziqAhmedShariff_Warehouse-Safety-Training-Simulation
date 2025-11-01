@@ -1,7 +1,7 @@
 using UnityEngine;
 
 
-public class PickupItem : MonoBehaviour
+public class PickupItem : MonoBehaviour, IInteractable
 {
     public string itemID; // e.g., "TapeGun"
     bool isCollected = false;
@@ -11,11 +11,30 @@ public class PickupItem : MonoBehaviour
     {
         if (string.IsNullOrEmpty(itemID)) itemID = gameObject.name;
     }
+    public void OnHoverEnter()
+    {
+        if (isCollected) return;
+        if (glowObject) glowObject.SetActive(true);
+        // Optionally play a hover sound or begin narration
+    }
+
+    public void OnHoverExit()
+    {
+        if (isCollected) return;
+        if (glowObject) glowObject.SetActive(false);
+        // stop hover narration if playing
+    }
+
+    public void OnSelect()
+    {
+
+    }
 
     public void OnPickedUp(Transform parent)
     {
         if (isCollected) return;
         isCollected = true;
+        if (glowObject) glowObject.SetActive(false);
         transform.SetParent(parent);
         transform.localPosition = Vector3.zero; // adjust if you want offset
         var rb = GetComponent<Rigidbody>();

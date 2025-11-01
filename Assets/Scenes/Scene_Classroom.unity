@@ -5372,6 +5372,7 @@ MonoBehaviour:
   guide_WelcomeClassroom: {fileID: 8300000, guid: eb34ce7564e2a0346b7c4324607d602f, type: 3}
   guide_FinishClassroom: {fileID: 8300000, guid: 51d3f9e3bb59e904887d06ec64fc8c71, type: 3}
   guide_CompleteChecklist: {fileID: 8300000, guid: 3eaf557235b3ac44b89c4b392d9405d0, type: 3}
+  guide_Success: {fileID: 8300000, guid: 6263a73888a60ea4faf6ae04d178e58d, type: 3}
 --- !u!4 &871354378
 Transform:
   m_ObjectHideFlags: 0

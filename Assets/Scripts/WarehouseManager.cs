@@ -52,15 +52,15 @@ public class WarehouseManager : MonoBehaviour
     public void OnClickNext_Wel()
     {
         taskActive = true;
-        //if (timerText)
-        //    timerText.gameObject.SetActive(true);
-        //if(objsToEnable != null)
-        //{
-        //    foreach (GameObject go in objsToEnable)
-        //    {
-        //        go.SetActive(true);
-        //    }
-        //}
+        if (timerText)
+            timerText.gameObject.SetActive(true);
+        if (objsToEnable != null)
+        {
+            foreach (GameObject go in objsToEnable)
+            {
+                go.SetActive(true);
+            }
+        }
         ToastNotification.Show("Collect and place all warehouse items before time expires!");
         if (SoundManager.Instance != null)
             SoundManager.Instance.PlaySound(SoundManager.Instance.guide_Collect);
@@ -145,6 +145,13 @@ public class WarehouseManager : MonoBehaviour
         ToastNotification.Show("Select the correct answer from the options above.");
         if (SoundManager.Instance != null)
             SoundManager.Instance.PlaySound(SoundManager.Instance.guide_Quiz);
+        if (objsToEnable != null)
+        {
+            foreach (GameObject go in objsToEnable)
+            {
+                go.SetActive(false);
+            }
+        }
     }
 
     public void OnLevelFail()

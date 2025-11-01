@@ -1,13 +1,11 @@
 using UnityEngine;
 
-
 public class PickupController : MonoBehaviour
 {
     public Transform carryAnchor; // assign an empty child in front of player camera
+    public LayerMask interactableLayer;
     public float pickupRange = 2f;
     Camera cam;
-
-    IInteractable lastHovered; // track previous hovered object
 
     void Start()
     {
@@ -15,23 +13,40 @@ public class PickupController : MonoBehaviour
         if (carryAnchor == null) carryAnchor = transform;
     }
 
-
     void Update()
     {
-        // left mouse / E to pick up - adapt to your input system
-
-        //if (Input.GetKeyDown(KeyCode.E))
+        // Only fire once per click, not continuously
         if (Input.GetMouseButtonDown(0))
         {
-            Ray ray = new Ray(cam.transform.position, cam.transform.forward);
-            if (Physics.Raycast(ray, out RaycastHit hit, pickupRange))
-            {
-                var item = hit.collider.GetComponent<PickupItem>();
-                if (item != null)
-                {
-                    item.OnPickedUp(carryAnchor);
-                }
-            }
+            TryPickup();
         }
     }
+
+    //void TryPickup()
+    //{
+    //    Ray ray = new Ray(cam.transform.position, cam.transform.forward);
+
+    //    // Use a LayerMask if needed to filter items (optional)
+    //    if (Physics.Raycast(ray, out RaycastHit hit, pickupRange))
+    //    {
+    //        // Debug.Log("Ray hit: " + hit.collider.name); // optional
+    //        var item = hit.collider.GetComponent<PickupItem>();
+    //        if (item != null)
+    //        {
+    //            item.OnPickedUp(carryAnchor);
+    //        }
+    //    }
+    //}
+    void TryPickup()
+    {
+        Ray ray = new Ray(cam.transform.position, cam.transform.forward);
+
+        // Cast only against the specified interactable layers
+        if (Physics.Raycast(ray, out RaycastHit hit, pickupRange, interactableLayer))
+        {
+            var item = hit.collider.GetComponentInParent<PickupItem>();
+            item?.OnPickedUp(carryAnchor);
+        }
+    }
+
 }

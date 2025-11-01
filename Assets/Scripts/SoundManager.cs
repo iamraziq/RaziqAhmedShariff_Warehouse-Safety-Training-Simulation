@@ -20,6 +20,7 @@ public class SoundManager : MonoBehaviour
     public AudioClip guide_WelcomeClassroom;
     public AudioClip guide_FinishClassroom;
     public AudioClip guide_CompleteChecklist;
+    public AudioClip guide_Success;
 
     private AudioSource audioSource;
 
