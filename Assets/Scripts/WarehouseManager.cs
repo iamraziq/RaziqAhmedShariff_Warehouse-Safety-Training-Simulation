@@ -163,4 +163,8 @@ public class WarehouseManager : MonoBehaviour
     {
         SceneManager.LoadScene("Scene_Classroom");
     }
+    public void OnClassroom()
+    {
+        SceneManager.LoadScene("Scene_Classroom");
+    }
 }

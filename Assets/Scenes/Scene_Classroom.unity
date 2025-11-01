@@ -2721,6 +2721,7 @@ GameObject:
   - component: {fileID: 492269640}
   - component: {fileID: 492269644}
   - component: {fileID: 492269645}
+  - component: {fileID: 492269646}
   m_Layer: 0
   m_Name: PlayerController
   m_TagString: Untagged
@@ -2848,6 +2849,32 @@ MonoBehaviour:
   interactableLayer:
     serializedVersion: 2
     m_Bits: 64
+--- !u!143 &492269646
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 492269639}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &495095237
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8247,7 +8274,7 @@ VideoPlayer:
   m_TargetAudioSources:
   - {fileID: 0}
   m_DirectAudioVolumes:
-  - 1
+  - 0.25
   m_Url: https://www.youtube.com/watch?v=iP-4V6SePhc
   m_EnabledAudioTracks: 01
   m_DirectAudioMutes: 00
