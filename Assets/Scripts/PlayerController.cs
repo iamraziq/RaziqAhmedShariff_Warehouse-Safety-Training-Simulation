@@ -38,6 +38,11 @@ public class PlayerController : MonoBehaviour
         // Move using velocity (no vertical component)
         Vector3 targetVelocity = move * moveSpeed;
         rb.velocity = new Vector3(targetVelocity.x, rb.velocity.y, targetVelocity.z);
+        // Instantly stop horizontal movement when no input
+        if (moveX == 0 && moveZ == 0)
+        {
+            rb.velocity = new Vector3(0f, rb.velocity.y, 0f);
+        }
     }
 
     void HandleMouseLook()

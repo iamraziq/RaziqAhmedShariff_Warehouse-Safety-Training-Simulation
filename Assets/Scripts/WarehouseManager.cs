@@ -152,6 +152,7 @@ public class WarehouseManager : MonoBehaviour
                 go.SetActive(false);
             }
         }
+        FindObjectOfType<PlayerController>().enabled = false;
     }
 
     public void OnLevelFail()
