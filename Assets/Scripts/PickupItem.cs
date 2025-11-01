@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PickupItem : MonoBehaviour, IInteractable
 {
-    public string itemID; // e.g., "TapeGun"
+    public string itemID;
     bool isCollected = false;
     public GameObject glowObject;
 
@@ -15,14 +15,12 @@ public class PickupItem : MonoBehaviour, IInteractable
     {
         if (isCollected) return;
         if (glowObject) glowObject.SetActive(true);
-        // Optionally play a hover sound or begin narration
     }
 
     public void OnHoverExit()
     {
         if (isCollected) return;
         if (glowObject) glowObject.SetActive(false);
-        // stop hover narration if playing
     }
 
     public void OnSelect()
@@ -36,7 +34,7 @@ public class PickupItem : MonoBehaviour, IInteractable
         isCollected = true;
         if (glowObject) glowObject.SetActive(false);
         transform.SetParent(parent);
-        transform.localPosition = Vector3.zero; // adjust if you want offset
+        transform.localPosition = Vector3.zero; 
         var rb = GetComponent<Rigidbody>();
         if (rb) rb.isKinematic = true;
 
@@ -56,7 +54,6 @@ public class PickupItem : MonoBehaviour, IInteractable
                 clipToPlay = SoundManager.Instance.guide_TapeGun;
                 break;
 
-            //case "Safety Helmet":
             case "Safety Helmet":
                 clipToPlay = SoundManager.Instance.guide_Helmet;
                 break;
@@ -65,7 +62,6 @@ public class PickupItem : MonoBehaviour, IInteractable
                 clipToPlay = SoundManager.Instance.guide_Gloves;
                 break;
 
-            //case "Barcode Scanner":
             case "Barcode Scanner":
                 clipToPlay = SoundManager.Instance.guide_Barcode;
                 break;

@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine.SceneManagement;
 
-
 public class WarehouseManager : MonoBehaviour
 {
     public static WarehouseManager Instance;
@@ -36,15 +35,6 @@ public class WarehouseManager : MonoBehaviour
     void Start()
     {
         timeLeft = totalTime;
-        //if(timerText)
-        //    timerText.gameObject.SetActive(false);
-        //if (objsToEnable != null)
-        //{
-        //    foreach (GameObject go in objsToEnable)
-        //    {
-        //        go.SetActive(false);
-        //    }
-        //}
         UpdateProgressUI();
         if (SoundManager.Instance != null)
             SoundManager.Instance.PlaySound(SoundManager.Instance.guide_WelcomeWarehouse);
@@ -109,7 +99,6 @@ public class WarehouseManager : MonoBehaviour
     void UpdateProgressUI()
     {
         float p = (float)placed.Count / (float)totalRequired;
-        //if (progressBar) progressBar.value = p;
         if(progressBarScript) progressBarScript.SetProgress(p);
     }
 
@@ -127,9 +116,7 @@ public class WarehouseManager : MonoBehaviour
     void OnTimeUp()
     {
         taskActive = false;
-        // handle fail (offer retry)
-        // show retry modal or restart scene
-        Debug.Log("Time is up - show retry prompt");
+        // handle fail 
         ShowFailPanel();
     }
 

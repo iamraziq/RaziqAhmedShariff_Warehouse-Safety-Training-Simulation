@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SoundManager : MonoBehaviour
@@ -41,10 +39,6 @@ public class SoundManager : MonoBehaviour
         audioSource.playOnAwake = false;
     }
 
-    /// <summary>
-    /// Plays the given audio clip. Stops any currently playing clip before playing the new one.
-    /// </summary>
-    /// <param name="clip">The AudioClip to play.</param>
     public void PlaySound(AudioClip clip)
     {
         if (clip == null)
@@ -60,9 +54,6 @@ public class SoundManager : MonoBehaviour
         audioSource.Play();
     }
 
-    /// <summary>
-    /// Stops the currently playing audio clip.
-    /// </summary>
     public void StopSound()
     {
         if (audioSource.isPlaying)

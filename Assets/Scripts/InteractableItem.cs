@@ -22,14 +22,12 @@ public class InteractableItem : MonoBehaviour, IInteractable
     {
         if (isInspected || InspectionManager.Instance.isBeingInspected) return;
         if (glowObject) glowObject.SetActive(true);
-        // Optionally play a hover sound or begin narration
     }
 
     public void OnHoverExit()
     {
         if (isInspected) return;
         if (glowObject) glowObject.SetActive(false);
-        // stop hover narration if playing
     }
 
     public void OnSelect()
@@ -40,7 +38,6 @@ public class InteractableItem : MonoBehaviour, IInteractable
             InspectionManager.Instance.StartInspection(this);
         if (SoundManager.Instance != null)
             SoundManager.Instance.StopSound();
-        //audioSource.Play();  // if you want narration on select
     }
 
     public void MarkInspected()

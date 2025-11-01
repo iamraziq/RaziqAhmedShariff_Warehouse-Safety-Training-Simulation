@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-
 public class TrayZone : MonoBehaviour
 {
     public List<string> requiredItems = new List<string> { "TapeGun", "BarcodeScanner", "Helmet", "Gloves" };
@@ -26,10 +25,8 @@ public class TrayZone : MonoBehaviour
                 WarehouseManager.Instance.NotifyItemPlaced(item.itemID);
                 // detach this item from player
                 item.transform.SetParent(transform);
-                //item.transform.localPosition = Vector3.zero; // change per-slot if needed
                 // Snap to the corresponding spawn point
                 item.transform.position = spawnPoints[itemIndex].position;
-                //item.transform.rotation = spawnPoints[itemIndex].rotation;
                 if (placedItems.Count < requiredItems.Count)
                 {
                     ToastNotification.Show("Now, collect and place the remaining items before the timer runs out!");

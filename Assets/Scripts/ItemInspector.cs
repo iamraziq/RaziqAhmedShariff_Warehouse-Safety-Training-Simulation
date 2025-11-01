@@ -25,12 +25,6 @@ public class ItemInspector : MonoBehaviour
             transform.Rotate(Vector3.up, -dx * rotationSpeed * Time.deltaTime, Space.World);
             transform.Rotate(Vector3.right, dy * rotationSpeed * Time.deltaTime, Space.Self);
         }
-
-        // close inspection: press Escape or right-click? We'll use E or a UI button.
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            onDone?.Invoke();
-        }
     }
 
     public void EndInspect()

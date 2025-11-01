@@ -15,7 +15,6 @@ public class Interactor : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            // Click: first check UI via EventSystem (UI handles itself).
             TrySelect();
         }
 
@@ -37,9 +36,6 @@ public class Interactor : MonoBehaviour
         }
         Debug.DrawRay(ray.origin, ray.direction * maxDistance, Color.green);
 
-
-        //// nothing hit
-        //if (lastHit != null) { lastHit.OnHoverExit(); lastHit = null; }
         // nothing hit
         if (lastHit != null)
         {
@@ -59,7 +55,7 @@ public class Interactor : MonoBehaviour
             interactable?.OnSelect();
         }
     }
-    //his method now safely returns the collider you’re hovering over
+
     public Collider GetHoveredCollider()
     {
         return lastHitCollider;

@@ -11,7 +11,6 @@ public class PlayerController : MonoBehaviour
     private float rotationX;
     private float rotationY;
     private Rigidbody rb;
-    //private CharacterController controller;
 
     void Start()
     {
@@ -31,14 +30,13 @@ public class PlayerController : MonoBehaviour
         float moveX = Input.GetAxis("Horizontal");
         float moveZ = Input.GetAxis("Vertical");
 
-        // Direction only on XZ plane — no Y movement ever
+        // Direction only on XZ plane — no Y movement
         Vector3 move = (transform.right * moveX + transform.forward * moveZ).normalized;
         move.y = 0f;
 
-        // Move using velocity (no vertical component)
+        // Move using velocity
         Vector3 targetVelocity = move * moveSpeed;
         rb.velocity = new Vector3(targetVelocity.x, rb.velocity.y, targetVelocity.z);
-        // Instantly stop horizontal movement when no input
         if (moveX == 0 && moveZ == 0)
         {
             rb.velocity = new Vector3(0f, rb.velocity.y, 0f);

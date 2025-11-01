@@ -21,22 +21,6 @@ public class PickupController : MonoBehaviour
             TryPickup();
         }
     }
-
-    //void TryPickup()
-    //{
-    //    Ray ray = new Ray(cam.transform.position, cam.transform.forward);
-
-    //    // Use a LayerMask if needed to filter items (optional)
-    //    if (Physics.Raycast(ray, out RaycastHit hit, pickupRange))
-    //    {
-    //        // Debug.Log("Ray hit: " + hit.collider.name); // optional
-    //        var item = hit.collider.GetComponent<PickupItem>();
-    //        if (item != null)
-    //        {
-    //            item.OnPickedUp(carryAnchor);
-    //        }
-    //    }
-    //}
     void TryPickup()
     {
         Ray ray = new Ray(cam.transform.position, cam.transform.forward);

@@ -21,7 +21,8 @@ public class ClassroomManager : MonoBehaviour
         }
     }
     public void OnClickNext_Class()
-    {
+    {   
+        //show guide message here
         ToastNotification.Show("Welcome to Warehouse Safety Training", 5f, "avatar");
         PlayVideo();
         if (SoundManager.Instance != null)
@@ -43,7 +44,7 @@ public class ClassroomManager : MonoBehaviour
 
         foreach (var obj in disableObjs)
             obj.SetActive(false);
-
+        //show guide message here
         ToastNotification.Show("Complete the safety inspection checklist. Hover over each item and click to inspect and learn about it.", 10f, "avatar");
         if (SoundManager.Instance != null)
             SoundManager.Instance.PlaySound(SoundManager.Instance.guide_CompleteChecklist);
@@ -53,13 +54,8 @@ public class ClassroomManager : MonoBehaviour
     {
         if (ChecklistManager.Instance.AllCompleted())
         {
-            // Load next scene or enable proceed UI
-            //GameSession.Instance.InitFromChecklist(ChecklistManager.Instance.itemNames);//Saving Game Session for next scene
+            // Load next scene
             UnityEngine.SceneManagement.SceneManager.LoadScene("Scene_Warehouse");
-        }
-        else
-        {
-            // show a toast: "Complete all inspections first"
         }
     }
 

@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 
 
@@ -12,8 +11,6 @@ public class QuizManager : MonoBehaviour
     int correctAnswers = 0;
     int buttonsPressed = 0;
 
-
-    // Hook each answer button to call this with true/false
     public void Answer(bool isCorrect)
     {
         if (isCorrect) correctAnswers++;
@@ -22,7 +19,6 @@ public class QuizManager : MonoBehaviour
         if(buttonsPressed >= 3)
         {
             // all questions answered, enable submit
-            // assuming there's a submit button to enable
             submitButton.SetActive(true);
             ToastNotification.Show("Click Submit to view your results.");
             if(SoundManager.Instance != null)
@@ -42,10 +38,10 @@ public class QuizManager : MonoBehaviour
             quizPanel.SetActive(false);
         }
         else
-        {
+        {   
+            // show retry panel
             WarehouseManager.Instance.ShowFailPanel();
-            resultText.text = "Failed — please retry.";        
-            // optionally show retry button
+            resultText.text = "Failed — please retry.";
         }
         // reset for next attempt
         correctAnswers = 0;

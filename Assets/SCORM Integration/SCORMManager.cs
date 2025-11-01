@@ -8,7 +8,7 @@ public class SCORMManager : MonoBehaviour
     public TMP_InputField scoreInputField;
 
     public static SCORMManager Instance { get; private set; }
-    // 🔹 Global values you can access anywhere
+    // Global values we can access anywhere
     public string StudentId { get; private set; }
     public string StudentName { get; private set; }
 
@@ -31,8 +31,7 @@ public class SCORMManager : MonoBehaviour
 
     private void Start()
     {
-        //InitSCORM();
-        // 🔹 Immediately mark course as incomplete
+        // Immediately mark course as incomplete
         SetCompletion("incomplete");
         RequestStudentInfo(); // Ask parent page for student info at start
     }
@@ -77,7 +76,7 @@ public class SCORMManager : MonoBehaviour
         var data = JsonUtility.FromJson<StudentInfo>(json);
         Debug.Log($"SCORM Student GET → ID: {data.id}, Name: {data.name}");
 
-        // ✅ Save globally
+        //Save globally
         StudentId = data.id;
         StudentName = data.name;
         Debug.Log($"SCORM Student SET in Unity → ID: {StudentId}, Name: {StudentName}");
