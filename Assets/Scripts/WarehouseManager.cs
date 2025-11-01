@@ -22,6 +22,7 @@ public class WarehouseManager : MonoBehaviour
 
     public GameObject quizPanel;
     public GameObject failPanel;
+    public GameObject[] objsToEnable;
 
     bool taskActive = false;
 
@@ -35,6 +36,15 @@ public class WarehouseManager : MonoBehaviour
     void Start()
     {
         timeLeft = totalTime;
+        //if(timerText)
+        //    timerText.gameObject.SetActive(false);
+        //if (objsToEnable != null)
+        //{
+        //    foreach (GameObject go in objsToEnable)
+        //    {
+        //        go.SetActive(false);
+        //    }
+        //}
         UpdateProgressUI();
         if (SoundManager.Instance != null)
             SoundManager.Instance.PlaySound(SoundManager.Instance.guide_WelcomeWarehouse);
@@ -42,6 +52,15 @@ public class WarehouseManager : MonoBehaviour
     public void OnClickNext_Wel()
     {
         taskActive = true;
+        //if (timerText)
+        //    timerText.gameObject.SetActive(true);
+        //if(objsToEnable != null)
+        //{
+        //    foreach (GameObject go in objsToEnable)
+        //    {
+        //        go.SetActive(true);
+        //    }
+        //}
         ToastNotification.Show("Collect and place all warehouse items before time expires!");
         if (SoundManager.Instance != null)
             SoundManager.Instance.PlaySound(SoundManager.Instance.guide_Collect);
