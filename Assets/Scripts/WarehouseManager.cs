@@ -79,7 +79,7 @@ public class WarehouseManager : MonoBehaviour
 
     void UpdateTimerUI()
     {
-        if (timerText) timerText.text = FormatTime(timeLeft);
+        if (timerText) timerText.text = $"Timer: {FormatTime(timeLeft)}";
     }
 
 

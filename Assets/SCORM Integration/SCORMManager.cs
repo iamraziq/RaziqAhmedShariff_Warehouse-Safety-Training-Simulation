@@ -21,7 +21,7 @@ public class SCORMManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // 🔹 keep SCORMManager alive across scenes
+            DontDestroyOnLoad(gameObject); //  keep SCORMManager alive across scenes
         }
         else
         {

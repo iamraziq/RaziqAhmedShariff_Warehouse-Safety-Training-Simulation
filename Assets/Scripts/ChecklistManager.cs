@@ -25,7 +25,9 @@ public class ChecklistManager : MonoBehaviour
             var texts = rowGO.GetComponentsInChildren<TMP_Text>();
             // assume order [itemName, status]
             texts[0].text = name;
+            texts[0].color = Color.black;
             texts[1].text = "Pending";
+            texts[1].color = Color.red;
             rowStatusMap[name] = texts[1];
         }
     }
@@ -35,18 +37,24 @@ public class ChecklistManager : MonoBehaviour
         if (rowStatusMap.ContainsKey(itemName))
         {
             rowStatusMap[itemName].text = "Inspection Completed";
+            rowStatusMap[itemName].color = Color.white;
         }
 
         UpdateProgressBar();
         if (AllCompleted())
         {
             Debug.Log("All inspections completed!");
-            // Optionally trigger further actions here
-            sceneFinalPanel.SetActive(true);
-            if(SoundManager.Instance != null)
-            {
-                SoundManager.Instance.PlaySound(SoundManager.Instance.guide_FinishClassroom);
-            }
+            // Trigger further actions here
+            Invoke("FinalPanel", 2f);
+        }
+    }
+
+    public void FinalPanel()
+    {
+        sceneFinalPanel.SetActive(true);
+        if (SoundManager.Instance != null)
+        {
+            SoundManager.Instance.PlaySound(SoundManager.Instance.guide_FinishClassroom);
         }
     }
     void UpdateProgressBar()
